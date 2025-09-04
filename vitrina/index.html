@@ -83,13 +83,112 @@
   </section>
   
   <!-- 📩 Contacto -->
-  <section id="contacto" class="py-16 px-4 text-center bg-white">
-    <h2 class="text-3xl font-bold text-teal-700 mb-6">Contáctanos</h2>
-    <p class="text-gray-600 mb-4">¿Quieres hacer un pedido o personalizar un combo?</p>
-    <a href="mailto:contacto@tusitio.com" class="inline-block bg-teal-600 text-white px-6 py-3 rounded-md hover:bg-teal-700 transition">
-      Escríbenos al correo
-    </a>
-  </section>
+<section id="contacto" class="py-16 px-4 text-center bg-white">
+  <h2 class="text-3xl font-bold text-teal-700 mb-6">Contáctanos</h2>
+  <p class="text-gray-600 mb-4">¿Quieres hacer un pedido o personalizar un combo?</p>
+
+  <!-- Botón que abre el modal -->
+  <button id="openContactModal"
+    class="inline-block bg-teal-600 text-white px-6 py-3 rounded-md hover:bg-teal-700 transition">
+    Escríbenos al correo
+  </button>
+</section>
+
+<!-- Modal -->
+<div id="contactModal" class="fixed inset-0 z-50 hidden" aria-hidden="true">
+  <!-- Fondo -->
+  <div id="contactModalBackdrop" class="absolute inset-0 bg-black/50"></div>
+
+  <!-- Contenido -->
+  <div class="relative mx-auto mt-24 w-[92%] max-w-lg">
+    <div class="rounded-2xl bg-white shadow-xl">
+      <div class="flex items-center justify-between px-6 py-4 border-b">
+        <h3 class="text-lg font-semibold text-teal-700">Contáctanos</h3>
+        <button id="closeContactModal" class="p-2 rounded hover:bg-gray-100" aria-label="Cerrar">
+          ✕
+        </button>
+      </div>
+
+      <form id="contactForm" class="px-6 py-5 space-y-4">
+        <div>
+          <label for="contactEmail" class="block text-sm font-medium text-gray-700">Correo electrónico</label>
+          <input type="email" id="contactEmail" name="email" required
+            class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-600" placeholder="tu@correo.com">
+        </div>
+
+        <div>
+          <label for="contactMessage" class="block text-sm font-medium text-gray-700">Descripción</label>
+          <textarea id="contactMessage" name="message" rows="5" required
+            class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-600"
+            placeholder="Cuéntanos qué necesitas..."></textarea>
+        </div>
+
+        <div class="flex items-center justify-end gap-3 pt-2">
+          <button type="button" id="cancelContactModal"
+            class="px-4 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-50">
+            Cancelar
+          </button>
+          <button type="submit"
+            class="px-5 py-2 rounded-md bg-teal-600 text-white hover:bg-teal-700">
+            Enviar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    const modal = document.getElementById('contactModal');
+    const openBtn = document.getElementById('openContactModal');
+    const closeBtn = document.getElementById('closeContactModal');
+    const cancelBtn = document.getElementById('cancelContactModal');
+    const backdrop = document.getElementById('contactModalBackdrop');
+    const emailInput = document.getElementById('contactEmail');
+    const form = document.getElementById('contactForm');
+
+    function openModal() {
+      modal.classList.remove('hidden');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('overflow-hidden');
+      setTimeout(() => emailInput.focus(), 50);
+    }
+
+    function closeModal() {
+      modal.classList.add('hidden');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('overflow-hidden');
+      openBtn.focus();
+    }
+
+    openBtn.addEventListener('click', openModal);
+    closeBtn.addEventListener('click', closeModal);
+    cancelBtn.addEventListener('click', closeModal);
+    backdrop.addEventListener('click', closeModal);
+
+    document.addEventListener('keydown', (e) => {
+      if (!modal.classList.contains('hidden') && e.key === 'Escape') closeModal();
+    });
+
+    // Enviar: ejemplo simple. Cambia por fetch/AJAX o integra con tu backend.
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = form.email.value.trim();
+      const message = form.message.value.trim();
+
+      // Aquí podrías hacer fetch(...) a tu endpoint.
+      // Por ahora, abrimos un mailto como fallback:
+      const subject = encodeURIComponent('Contacto desde la web');
+      const body = encodeURIComponent(`Correo: ${email}\n\nDescripción:\n${message}`);
+      window.location.href = `mailto:contacto@tusitio.com?subject=${subject}&body=${body}`;
+
+      closeModal();
+      form.reset();
+    });
+  })();
+</script>
+
 
 </body>
 </html>
