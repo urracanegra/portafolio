@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mood Peludito</title>
+  <script src="https://cdn.tailwindcss.com"></script> <!-- Tailwind cargado desde CDN -->
+</head>
+<body class="bg-white text-gray-800 scroll-smooth font-sans">
+
+  <!-- 🟢 Menú flotante -->
+  <nav class="fixed top-0 left-0 right-0 bg-white shadow-md z-50">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+      <span class="font-bold text-teal-700 text-lg">Mood Peludito</span>
+      <ul class="flex space-x-4 text-sm font-medium">
+        <li><a href="#inicio" class="hover:text-teal-600">Inicio</a></li>
+        <li><a href="#productos" class="hover:text-teal-600">Productos</a></li>
+        <li><a href="#combos" class="hover:text-teal-600">Combos</a></li>
+        <li><a href="#contacto" class="hover:text-teal-600">Contacto</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- 🟣 Hero / Encabezado -->
+  <section id="inicio" class="pt-20 bg-gradient-to-b from-teal-100 to-white text-center py-16 px-4">
+    <h1 class="text-4xl font-extrabold text-teal-700 mb-4">Mood Peludito</h1>
+    <p class="text-lg text-gray-600 mb-6">Creaciones hechas con amor 🧵🐾</p>
+    <img src="destacado.jpg" alt="Productos Mood Peludito" class="mx-auto max-w-md rounded-lg shadow-md">
+  </section>
+
+  <!-- 🔶 Productos -->
+  <section id="productos" class="py-16 px-4 bg-white">
+    <h2 class="text-3xl font-bold text-center text-teal-700 mb-10">Nuestros Productos</h2>
+    <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
+
+      <!-- Tarjeta 1: Llaveros -->
+      <div class="bg-white shadow-lg rounded-xl p-4 text-center">
+        <img src="llavero.jpg" alt="Llaveros tejidos" class="w-full h-48 object-cover rounded-md mb-4">
+        <h3 class="text-xl font-semibold text-teal-700">Llaveros Tejidos</h3>
+        <p class="text-gray-600 text-sm my-2">Hechos a mano, disponibles en varias mascotas y colores. Únicos y con amor.</p>
+        <p class="text-teal-600 font-bold">Desde $8.000 COP</p>
+      </div>
+
+      <!-- Tarjeta 2: Carteras -->
+      <div class="bg-white shadow-lg rounded-xl p-4 text-center">
+        <img src="cartera.jpg" alt="Cartera tejida" class="w-full h-48 object-cover rounded-md mb-4">
+        <h3 class="text-xl font-semibold text-teal-700">Carteras Tejidas</h3>
+        <p class="text-gray-600 text-sm my-2">Versátiles, resistentes y en diferentes tamaños y colores.</p>
+        <p class="text-teal-600 font-bold">Desde $15.000 COP</p>
+      </div>
+
+      <!-- Tarjeta 3: Plantitas -->
+      <div class="bg-white shadow-lg rounded-xl p-4 text-center">
+        <img src="plantitas.jpg" alt="Mini plantitas" class="w-full h-48 object-cover rounded-md mb-4">
+        <h3 class="text-xl font-semibold text-teal-700">Mini Plantitas</h3>
+        <p class="text-gray-600 text-sm my-2">Perfectas para decorar y organizar cables o libros. Suaves y adorables.</p>
+        <p class="text-teal-600 font-bold">Desde $10.000 COP</p>
+      </div>
+    </div>
+  </section>
+
+    <!-- 🧡 Combos -->
+  <section id="combos" class="py-16 px-4 bg-teal-50">
+    <h2 class="text-3xl font-bold text-center text-teal-700 mb-10">Combos Especiales</h2>
+    <div class="grid gap-6 md:grid-cols-2 max-w-5xl mx-auto">
+
+      <!-- Combo 1 -->
+      <div class="bg-white shadow-md p-5 rounded-lg">
+        <h3 class="text-lg font-semibold text-teal-700 mb-2">💚 Combo 1: Detalles que Enamoran</h3>
+        <p class="text-sm text-gray-600">1 Mini plantita de crochet + 1 Llavero tejido</p>
+        <p class="font-bold text-teal-600 mt-2">$16.000 COP</p>
+      </div>
+
+      <!-- Combo 2 -->
+      <div class="bg-white shadow-md p-5 rounded-lg">
+        <h3 class="text-lg font-semibold text-teal-700 mb-2">🌼 Combo 2: Amor a Primera Vista</h3>
+        <p class="text-sm text-gray-600">1 Mini plantita de crochet + 1 Pack de 5 stickers</p>
+        <p class="font-bold text-teal-600 mt-2">$18.000 COP</p>
+      </div>
+
+      <!-- Puedes continuar con los demás combos igual -->
+    </div>
+  </section>
+  
+  <!-- 📩 Contacto -->
+  <section id="contacto" class="py-16 px-4 text-center bg-white">
+    <h2 class="text-3xl font-bold text-teal-700 mb-6">Contáctanos</h2>
+    <p class="text-gray-600 mb-4">¿Quieres hacer un pedido o personalizar un combo?</p>
+    <a href="mailto:contacto@tusitio.com" class="inline-block bg-teal-600 text-white px-6 py-3 rounded-md hover:bg-teal-700 transition">
+      Escríbenos al correo
+    </a>
+  </section>
+
+</body>
+</html>
+
