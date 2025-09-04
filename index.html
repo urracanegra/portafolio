@@ -1,12 +1,301 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portafolio</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portafolio | Diseñador/a Gráfico/a</title>
+  <meta name="description" content="Landing page minimal para portafolio de diseño gráfico." />
+
+  <!-- Tipografía -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --page-max: 1200px;
+      --glass-bg: rgba(255, 255, 255, 0.12);
+      --glass-border: rgba(255, 255, 255, 0.25);
+      --accent: #ff6b6b;
+      --text: #0f1222;
+      --text-contrast: #ffffff;
+    }
+
+    *{box-sizing: border-box}
+    html, body{height:100%}
+    body{
+      margin:0;
+      font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
+      color: var(--text);
+      background: #0b0e1a;
+      background-image: url('./images/bg-portfolio.png'); /* reemplaza si cambias la ruta */
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+    }
+
+    /* Capa de gradiente para mejorar contraste del texto */
+    .scrim{
+      position: fixed; inset: 0;
+      background: linear-gradient(180deg, rgba(5,8,22,0.65) 0%, rgba(5,8,22,0.30) 35%, rgba(5,8,22,0.65) 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    header{
+      position: sticky; top: 0; z-index: 5;
+      backdrop-filter: saturate(140%) blur(6px);
+      background: linear-gradient(90deg, rgba(255,255,255,0.22), rgba(255,255,255,0.08));
+      border-bottom: 1px solid var(--glass-border);
+      transform: translateY(-10px);
+      opacity: 0;
+      animation: slideDown .6s ease .2s forwards;
+    }
+    .topbar{
+      max-width: var(--page-max); margin: 0 auto; padding: 14px 20px;
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    }
+    .brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:0.5px; color: var(--text-contrast)}
+    .brand-mark{
+      width: 32px; height: 32px; border-radius: 10px;
+      background: radial-gradient(circle at 30% 30%, #ffd166, #ef476f 60%, #118ab2);
+      box-shadow: 0 6px 16px rgba(0,0,0,.25), inset 0 0 0 1px rgba(255,255,255,.35);
+    }
+    .nav-links{display:flex; gap:20px}
+    .nav-links a{color:#f7f7fb; text-decoration:none; font-weight:500; opacity:.9}
+    .nav-links a:hover{opacity:1; text-decoration:underline}
+
+    .hero{
+      position: relative; z-index: 1;
+      max-width: var(--page-max); margin: clamp(40px, 8vw, 96px) auto; padding: 0 20px;
+      display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(20px, 6vw, 40px);
+      align-items: center;
+    }
+    .glass{
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px) saturate(125%);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: clamp(20px, 5vw, 36px);
+      box-shadow: 0 10px 40px rgba(0,0,0,.35);
+      color: #fff;
+      transform: translateY(14px);
+      opacity: 0;
+      animation: fadeUp .8s ease .35s forwards;
+    }
+    .badge{display: inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px; border:1px solid rgba(255,255,255,.35); background: rgba(255,255,255,.08); font-size:12px; letter-spacing:.4px}
+    .badge-dot{width:8px; height:8px; border-radius:999px; background: var(--accent)}
+
+    h1{margin:12px 0 8px; font-size:clamp(28px, 6vw, 54px); color:#fff}
+    p.lead{margin:0 0 18px; font-size: clamp(15px, 2.2vw, 18px); color:#e8e8f3}
+
+    .cta{display:flex; gap:12px; flex-wrap:wrap}
+    .btn{
+      cursor:pointer; border:none; border-radius:12px; font-weight:600; padding:12px 16px; display:inline-flex; align-items:center; gap:10px;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .btn-primary{background:#ffffff; color:#0d0f1e; box-shadow:0 10px 24px rgba(255,255,255,.12)}
+    .btn-primary:hover{transform: translateY(-1px)}
+    .btn-ghost{background: rgba(255,255,255,.08); color:#fff; border:1px solid rgba(255,255,255,.25)}
+    .btn-ghost:hover{background: rgba(255,255,255,.12)}
+
+    .sample-card{
+      aspect-ratio: 4/3;
+      border-radius: 16px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.25);
+      box-shadow: 0 12px 36px rgba(0,0,0,.35);
+      transform: scale(.96);
+      opacity: 0;
+      animation: popIn .8s ease .55s forwards;
+    }
+
+    /* Secciones de contenido */
+    section{position: relative; z-index: 1; margin: 64px auto; max-width: var(--page-max); padding: 0 20px}
+    .grid{display:grid; gap:20px}
+    .grid.cols-3{grid-template-columns: repeat(3, 1fr)}
+    .work-card{
+      border-radius: 16px; overflow:hidden; background: rgba(255,255,255,.10); border:1px solid rgba(255,255,255,.25);
+      transition: transform .15s ease, box-shadow .2s ease;
+    }
+    .work-card:hover{transform: translateY(-4px); box-shadow: 0 18px 40px rgba(0,0,0,.35)}
+    .work-thumb{aspect-ratio: 16/10; background: rgba(255,255,255,.08)}
+    .work-meta{padding:14px; color:#fff}
+    .work-title{margin:0 0 6px; font-size:16px}
+    .work-tags{font-size:12px; opacity:.85}
+
+    /* Menú flotante radial (FAB) */
+    .fab{
+      --size: 60px;
+      position: fixed; right: 22px; bottom: 22px; z-index: 10;
+      display: grid; place-items: center;
+    }
+    .fab .core{
+      width: var(--size); height: var(--size); border-radius: 50%; border: none; cursor: pointer;
+      background: #11131f; color: #fff; font-size: 24px; box-shadow: 0 12px 26px rgba(0,0,0,.45), inset 0 0 0 1px rgba(255,255,255,.18);
+      display: grid; place-items: center;
+      transition: transform .12s ease, rotate .2s ease;
+    }
+    .fab.open .core{rotate: 45deg}
+
+    .fab-list{
+      position: absolute; inset: 0; pointer-events: none;
+    }
+    .fab-item{
+      --angle: 0deg;    /* ángulo individual */
+      --radius: 110px;  /* radio del abanico */
+      position: absolute;
+      left: calc(var(--size)/2); bottom: calc(var(--size)/2);
+      transform: translate(-50%, 50%) rotate(var(--angle)) translateY(calc(var(--radius)*-1)) rotate(calc(var(--angle)*-1));
+      opacity: 0;
+      transition: transform .28s cubic-bezier(.2,.7,.2,1), opacity .28s ease;
+    }
+    .fab-item a{
+      pointer-events: auto;
+      display: flex; align-items:center; gap: 10px; padding: 10px 12px; border-radius: 12px;
+      background: rgba(255,255,255,.14); color: #fff; text-decoration: none; border: 1px solid rgba(255,255,255,.25);
+      backdrop-filter: blur(8px) saturate(130%);
+      white-space: nowrap;
+    }
+
+    /* Estados abiertos con animación escalonada */
+    .fab.open .fab-item{opacity:1}
+    .fab.open .fab-item:nth-child(1){ transition-delay: .02s }
+    .fab.open .fab-item:nth-child(2){ transition-delay: .06s }
+    .fab.open .fab-item:nth-child(3){ transition-delay: .10s }
+    .fab.open .fab-item:nth-child(4){ transition-delay: .14s }
+
+    /* Al estar cerrado, retrae los items al núcleo */
+    .fab:not(.open) .fab-item{
+      transform: translate(-50%, 50%) rotate(var(--angle)) translateY(0) rotate(calc(var(--angle)*-1));
+      transition-delay: 0s;
+    }
+
+    /* Responsivo */
+    @media (max-width: 900px){
+      .hero{grid-template-columns: 1fr}
+      .grid.cols-3{grid-template-columns: 1fr 1fr}
+    }
+    @media (max-width: 600px){
+      .grid.cols-3{grid-template-columns: 1fr}
+      .nav-links{display:none}
+      .fab-item a{font-size: 14px}
+      .fab{--size: 56px}
+      .fab-item{--radius: 96px}
+    }
+
+    /* Animaciones */
+    @keyframes fadeUp{to{opacity:1; transform: translateY(0)}}
+    @keyframes popIn{to{opacity:1; transform: scale(1)}}
+    @keyframes slideDown{to{opacity:1; transform: translateY(0)}}
+  </style>
 </head>
 <body>
-    <h1>Hola mundo</h1>
-    
+  <div class="scrim" aria-hidden="true"></div>
+
+  <header>
+    <div class="topbar">
+      <div class="brand"><span class="brand-mark" aria-hidden="true"></span> <span>Nombre Apellido</span></div>
+      <nav class="nav-links" aria-label="Principal">
+        <a href="#trabajos">Trabajos</a>
+        <a href="#sobre-mi">Sobre mí</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="glass">
+        <span class="badge"><span class="badge-dot"></span> Portafolio 2025</span>
+        <h1>Diseño que comunica<br/>y marcas que conectan</h1>
+        <p class="lead">Soy diseñador/a gráfico/a especializado/a en identidad visual, ilustración y dirección de arte. Transformo ideas en conceptos visuales memorables.</p>
+        <div class="cta">
+          <a class="btn btn-primary" href="#trabajos">Ver trabajos</a>
+          <a class="btn btn-ghost" href="#contacto">Hablemos</a>
+        </div>
+      </div>
+      <div class="sample-card" aria-hidden="true"></div>
+    </section>
+
+    <section id="trabajos">
+      <div class="grid cols-3">
+        <article class="work-card">
+          <div class="work-thumb"></div>
+          <div class="work-meta">
+            <h3 class="work-title">Identidad – Café Aurora</h3>
+            <div class="work-tags">Branding · Packaging · 2025</div>
+          </div>
+        </article>
+        <article class="work-card">
+          <div class="work-thumb"></div>
+          <div class="work-meta">
+            <h3 class="work-title">Ilustración editorial</h3>
+            <div class="work-tags">Ilustración · Editorial · 2024</div>
+          </div>
+        </article>
+        <article class="work-card">
+          <div class="work-thumb"></div>
+          <div class="work-meta">
+            <h3 class="work-title">Dirección de arte – Campaña</h3>
+            <div class="work-tags">Arte · Social · 2024</div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="sobre-mi">
+      <div class="glass">
+        <h2 style="color:#fff; margin-top:0">Sobre mí</h2>
+        <p style="color:#e9e9f4; margin:0">Breve bio profesional. Experiencia, clientes, enfoque creativo y herramientas favoritas (Adobe CC, Figma, Procreate…).</p>
+      </div>
+    </section>
+
+    <section id="contacto" style="margin-bottom:140px">
+      <div class="glass">
+        <h2 style="color:#fff; margin-top:0">Contacto</h2>
+        <p style="color:#e9e9f4">¿Tienes un proyecto en mente? Escríbeme a <a href="mailto:hola@tu-dominio.com" style="color:#fff; font-weight:600">hola@tu-dominio.com</a> o agenda una llamada.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Menú flotante radial (FAB) con animaciones escalonadas) -->
+  <div class="fab" id="fab">
+    <button class="core" id="fabBtn" aria-haspopup="true" aria-expanded="false" aria-controls="fabList" aria-label="Abrir menú flotante">+</button>
+
+    <div class="fab-list" id="fabList" role="menu">
+      <!-- Define ángulos para cada item (en grados) -->
+      <div class="fab-item" style="--angle: 270deg"><a href="#inicio" role="menuitem">🏠 Inicio</a></div>
+      <div class="fab-item" style="--angle: 225deg"><a href="#trabajos" role="menuitem">🎨 Trabajos</a></div>
+      <div class="fab-item" style="--angle: 180deg"><a href="#sobre-mi" role="menuitem">👤 Sobre mí</a></div>
+      <div class="fab-item" style="--angle: 135deg"><a href="#contacto" role="menuitem">✉️ Contacto</a></div>
+    </div>
+  </div>
+
+  <script>
+    const fab = document.getElementById('fab');
+    const btn = document.getElementById('fabBtn');
+
+    function toggleFab(){ const open = fab.classList.toggle('open'); btn.setAttribute('aria-expanded', open); }
+    btn.addEventListener('click', toggleFab);
+
+    // Cierra al hacer clic fuera
+    document.addEventListener('click', (e)=>{
+      if(!fab.contains(e.target)){
+        fab.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // Cerrar con ESC y navegar con TAB
+    document.addEventListener('keydown', (e)=>{
+      if(e.key === 'Escape'){
+        fab.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+        btn.focus();
+      }
+    });
+  </script>
 </body>
 </html>
